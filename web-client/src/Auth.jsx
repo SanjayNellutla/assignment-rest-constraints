@@ -5,7 +5,7 @@ import axios from "axios";
 import config from "./config";
 
 const Auth = (props) => {
-  const { resources } = props.options;
+  const { resources, onRouteChange } = props.options;
   const history = useHistory();
   const [user, setUser] = React.useState({
     email: 'sanjay.nellutla@fissionlabs.com',
@@ -16,8 +16,9 @@ const Auth = (props) => {
   const onLogin = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    axios.post(`${config.url}${resources.login}`, user).then((response) => {
-      history.push('/posts');
+    axios.post(`${config.url}${resources.login.url}`, user).then((response) => {
+      onRouteChange(response.data.redirect);
+      history.push(response.data.redirect);
     });
   };
 

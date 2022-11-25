@@ -19,12 +19,9 @@ const getPaginated = async (req, res) => {
     const page = req.params.page || 1;
     const size = req.params.size || 10;
     const users = await getPaginatedUsers(page, size);
-    successResponse(req, res, { users, links: {
-      posts: {
-        method: "GET",
-        url: "/posts",
-      }
-    } });
+    res.send({ data: users, links: [
+      { key: "users", url: "/users" }, { key: "posts", url: "/posts" },
+    ] })
   } catch (error) {
     errorResponse(req, res, error.message);
   }
@@ -32,7 +29,7 @@ const getPaginated = async (req, res) => {
 
 const router = express.Router();
 
-router.get('/users', verifyAuthorization, getPaginated);
+router.get('/', verifyAuthorization, getPaginated);
 
 
 module.exports = router;

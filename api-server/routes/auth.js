@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.send({
-    links: {
+    links: [{ key: "users", url: "/users" }, { key: "posts", url: "/posts" }],
+    resources: {
       login: {
         method: "POST",
         url: "/login"
@@ -15,10 +16,6 @@ router.get('/', (req, res) => {
         method: "POST",
         url: "/register"
       },
-      posts: {
-        method: "GET",
-        url: "/posts",
-      }
     }
   });
 });

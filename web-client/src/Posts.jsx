@@ -1,25 +1,29 @@
-import React from 'react'
-// import { useHistory } from 'react-router';
-// import axios from "axios";
-// import config from "./config";
+import React from 'react';
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Card } from "react-bootstrap";
+
 
 const Posts = (props) => {
-  // const { links, setLinks } = props;
-  // const [posts, setPosts] = React.useState([]);
-
-
-  // const getPosts = () => {
-  //   axios.get(`${config.url}${pathname}`, {
-  //     headers: {
-  //       authorization: config.token,
-  //     }
-  //   }).then((response) => {
-  //   });
-  // };
-  
-  
+  const { data, onRouteChange, getLink } = props.options
+    
   return (
-    <div>Posts</div>
+    <Container className="mt-5">
+      <div className="text-right">
+        <Link onClick={() => {
+          onRouteChange(getLink("users"));
+        }} to={getLink("users")}>Users</Link>
+        <Link onClick={() => {
+          onRouteChange("/");
+        }} to="/">Logout</Link>
+      </div>
+      {(data || []).map(item => {
+       return <Row key={item.id}>
+          <Col>
+            <Card className="mt-4">{JSON.stringify(item)}</Card>
+          </Col>
+        </Row>
+      })}
+    </Container>
   )
 }
 

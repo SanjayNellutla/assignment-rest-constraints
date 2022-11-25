@@ -34,7 +34,7 @@ const config = require("../config/config");
           { user },
           config.jwtSecret,
         );
-        successResponse(req, res, { user, token });
+        res.send({ user, token, redirect: '/posts' });
       } else {
         throw new Error('Wrong Credentials');
       }

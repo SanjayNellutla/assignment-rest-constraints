@@ -19,9 +19,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({ where: { userId: req.user.id } });
-    successResponse(req,res, {
-      posts,
-      links: {
+    res.send({
+      data: posts,
+      links: [{ key: "users", url: "/users" }, { key: "posts", url: "/posts" }],
+      resources: {
         comments: {
           method: "GET",
           url: "/comments"
