@@ -5,7 +5,7 @@ const { successResponse } = require('../helpers');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  successResponse(req, res, {
+  res.send({
     links: {
       login: {
         method: "POST",
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
         url: "/posts",
       }
     }
-  })
+  });
 });
 
 router.post('/login', userController.login);
