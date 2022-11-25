@@ -3,23 +3,19 @@ const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
 const Like = require('./Like');
+const config = require("../config/config");
 
 const db = {};
 
 let sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+  config.database,
+  config.username,
+  config.password,
   {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: process.env.DB_DIALECT,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
+    host: config.host,
+    port: config.dbPort,
+    dialect: config.dialect,
+    pool: config.connectionPool
   },
 );
 
@@ -28,8 +24,26 @@ db.Post = Post(sequelize, Sequelize.DataTypes);
 db.Comment = Comment(sequelize, Sequelize.DataTypes);
 db.Like = Like(sequelize, Sequelize.DataTypes);
 
+// Relationships
+// User & Post
 db.User.hasMany(db.Post, { foreignKey: 'user_id' });
 db.Post.belongsTo(db.User);
+
+// User & Like
+db.User.hasMany(db.Like, { foreignKey: 'user_id' });
+db.Like.belongsTo(db.User);
+
+// User & Comment
+db.User.hasMany(db.Comment, { foreignKey: 'user_id' });
+db.Comment.belongsTo(db.User);
+
+// Post & Comment
+db.Post.hasMany(db.Comment, { foreignKey: 'user_id' });
+db.Comment.belongsTo(db.Post);
+
+// Post & Like
+db.Post.hasMany(db.Like, { foreignKey: 'user_id' });
+db.Like.belongsTo(db.Post);
 
 // sequelize.sync();
 

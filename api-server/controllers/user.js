@@ -3,6 +3,7 @@ const userService = require('../services/user');
 const userValidations = require("../validations/user");
 const { successResponse, errorResponse } = require("../helpers");
 const { compareHash } = require("../helpers/hash");
+const config = require("../config/config");
 
 
  const getPaginated = async (req, res) => {
@@ -46,7 +47,7 @@ const { compareHash } = require("../helpers/hash");
             user,
     
           },
-          process.env.JWT_SECRET
+          config.jwtSecret,
         );
         successResponse(req, res, { user, token });
       } else {

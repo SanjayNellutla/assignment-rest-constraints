@@ -1,11 +1,10 @@
+require('dotenv').config({ path: '.env' });
 const express = require('express');
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-dotenv.config({ path: '.env' });
 const cors = require('cors');
 const { sequelize } = require('./models');
-// const initSequelize = require('./config/sequelize');
 const router = require('./routes');
+const config = require('./config/config');
 
 
 const app = express();
@@ -14,15 +13,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/users', router.users);
 app.use('/posts', router.posts);
+app.use('/comments', router.comments);
+app.use('/likes', router.likes);
 
-sequelize
-  .authenticate()
-  .then(() => {
-    app.listen(3000, () => {
-      console.log('Web server listnening to: 3000');
-      // initSequelize();
-    });
-  })
-  .catch((err) => {
-    // console.error('Unable to connect to the database:', err);
-  });
+app.listen(config.port, () => {
+  console.log(`Web server listening to: ${config.port}`);
+  sequelize
+  .authenticate().then(() => {
+    console.log(`Successfully connected to: ${config.host}`);
+  }).catch(error =>{
+    console.log(error);
+  }) 
+});
