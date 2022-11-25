@@ -18,8 +18,20 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.findAll();
-    successResponse(req,res, posts);
+    const posts = await Post.findAll({ where: { userId: req.user.id } });
+    successResponse(req,res, {
+      posts,
+      links: {
+        comments: {
+          method: "GET",
+          url: "/comments"
+        },
+        likes: {
+          method: "GET",
+          url: "/likes"
+        }
+      }
+    });
   } catch (error) {
     errorResponse(req,res, error.message);
   }

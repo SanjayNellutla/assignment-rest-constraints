@@ -1,21 +1,9 @@
 const jwt = require("jsonwebtoken");
-const userService = require('../services/user');
+const userService = require('../services/auth');
 const userValidations = require("../validations/user");
 const { successResponse, errorResponse } = require("../helpers");
 const { compareHash } = require("../helpers/hash");
 const config = require("../config/config");
-
-
- const getPaginated = async (req, res) => {
-  try {
-    const page = req.params.page || 1;
-    const size = req.params.size || 10;
-    const users = await userService.getPaginatedUsers(page, size);
-    successResponse(req, res, { users });
-  } catch (error) {
-    errorResponse(req, res, error.message);
-  }
-};
 
  const register = async (req, res) => {
   try {
@@ -43,10 +31,7 @@ const config = require("../config/config");
       const isAuthenticated = await compareHash(req.body.password, user.password);
       if (isAuthenticated) {
         const token = jwt.sign(
-          {
-            user,
-    
-          },
+          { user },
           config.jwtSecret,
         );
         successResponse(req, res, { user, token });
@@ -64,7 +49,6 @@ const config = require("../config/config");
 module.exports = {
   register,
   login,
-  getPaginated,
 }
 
 
