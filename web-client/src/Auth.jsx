@@ -27,10 +27,11 @@ const Auth = (props) => {
       <Row>
         <Col></Col>
         <Col>
-          <Card>
+          <Card className="mt-5 pt-5 p-5">
+            <h3>Login</h3>
             <Form>
-              <FormGroup>
-                <FormControl type="email" placeholder="email" value={user.email} onInput={(e) => {
+              <FormGroup className='my-4'>
+                <FormControl size="lg" type="email" placeholder="email" value={user.email} onInput={(e) => {
                   setUser((_user) => {
                     return {
                       ..._user,
@@ -39,8 +40,8 @@ const Auth = (props) => {
                   })
                 }} />
               </FormGroup>
-              <FormGroup>
-                <FormControl type="password" placeholder="password" value={user.password} onInput={(e) => {
+              <FormGroup className='my-4'>
+                <FormControl size="lg" type="password" placeholder="password" value={user.password} onInput={(e) => {
                   setUser((_user) => {
                     return {
                       ..._user,

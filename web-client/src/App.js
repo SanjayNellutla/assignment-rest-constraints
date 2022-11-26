@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router} from "react-router-dom";
 import { Switch, Route  } from "react-router";
 import axios from "axios";
@@ -45,8 +45,9 @@ function App() {
     getLinks(_path);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getLinks();
+    return () => {};
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
