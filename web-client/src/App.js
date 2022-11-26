@@ -21,13 +21,16 @@ function App() {
   
   const getLinks = (_path) => {
     setLoading(true);
-    axios.get(`${config.url}${_path || endPoint}`, {
+    axios.get(`${config.url}/api/v1${_path || endPoint}`, {
       headers: {
         authorization: config.token,
       }
     }).then((response) => {
       setLoading(false);
-      setLinks(response.data.links);
+      setLinks(response.data.links.map((item) => ({
+        ...item,
+        url: item.url.replace("/api/v1", ""),
+      })));
       setResources(response.data.resources);
       setData(response.data.data);
     }, () => {

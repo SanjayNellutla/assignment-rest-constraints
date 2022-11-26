@@ -1,26 +1,31 @@
-const express = require('express');
-const authController = require('../controllers/auth');
+const express = require("express");
+const urls = require("../config/urls");
+const authController = require("../controllers/auth");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get(urls.base, (req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=31557600");
   res.send({
-    links: [{ key: "users", url: "/users" }, { key: "posts", url: "/posts" }],
+    links: [
+      { key: "users", url: urls.users },
+      { key: "posts", url: urls.posts },
+    ],
     resources: {
       login: {
         method: "POST",
-        url: "/login"
+        url: urls.login,
       },
       register: {
         method: "POST",
-        url: "/register"
+        url: urls.register,
       },
-    }
+    },
   });
 });
 
-router.post('/login', authController.login);
+router.post(urls.login, authController.login);
 
-router.post('/register', authController.register);
+router.post(urls.register, authController.register);
 
 module.exports = router;

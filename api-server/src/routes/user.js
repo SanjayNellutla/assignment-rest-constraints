@@ -2,6 +2,7 @@ const express = require("express");
 const { User, Post } = require("../models");
 const { errorResponse } = require("../helpers");
 const { verifyAuthorization } = require("../helpers/jwt");
+const urls = require("../config/urls");
 
 const getPaginatedUsers = async (page, limit) => {
   const users = await User.findAndCountAll({
@@ -21,8 +22,8 @@ const getPaginated = async (req, res) => {
     res.send({
       data: users,
       links: [
-        { key: "users", url: "/users" },
-        { key: "posts", url: "/posts" },
+        { key: "users", url: urls.users },
+        { key: "posts", url: urls.posts },
       ],
     });
   } catch (error) {

@@ -31,6 +31,7 @@ const Users = (props) => {
           onRouteChange("/");
         }} to="/">Logout</Link>
       </div> */}
+      <h4 className="my-3">USERS:</h4>
       {(users).map(item => {
        return <Row key={item.id}>
           <Col>
