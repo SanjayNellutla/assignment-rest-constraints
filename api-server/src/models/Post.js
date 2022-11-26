@@ -1,5 +1,3 @@
-const { hashText } = require("../helpers/hash");
-
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     "posts",
