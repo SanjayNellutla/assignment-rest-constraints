@@ -33,10 +33,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Like.associate = ({ User }) => {
-    User.hasMany(Post, { foreignKey: 'user_id' });
-    Post.hasMany(Like, { foreignKey: 'post_id' });
-  };
-
   return Like;
 };
