@@ -1,4 +1,4 @@
-### Installing
+### Installing packages
 ```
 > npm install
 ```
